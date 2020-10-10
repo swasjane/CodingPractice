@@ -1,0 +1,26 @@
+//Two pointer problem 
+// Figure out minimum height, area and then max area. Move the pointers accordingly. 
+
+class Solution {
+    public int maxArea(int[] height) {
+       int start =0, end =height.length-1;
+       int maxArea = 0;
+       while(start<end)
+       {
+         int minHeight = Math.min(height[start],height[end]);
+         int area = minHeight * (end-start);
+         maxArea = Math.max(area,maxArea);
+         if(height[start]<height[end])
+         {
+             start++;
+         }
+         else
+         {
+             end--;
+         }
+      }
+      return maxArea;  
+        
+        
+    }
+}
