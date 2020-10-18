@@ -1,0 +1,119 @@
+/* 
+ * Enter your code here. Read input from STDIN. Print your output to STDOUT. 
+ * Your class should be named CandidateCode.
+*/
+
+import java.io.*;
+import java.util.*;
+public class CandidateCode {
+    
+
+public static void main(String args[] ) throws Exception {
+
+    	//Write code here
+      int[] a = new int[2];
+     
+     
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      try {
+           
+           String[] in = br.readLine().trim().split("\\s+"); 
+           for(int k=0;k<2;k++)
+           {
+             a[k] = Integer.parseInt(in[k]);
+           }
+          
+
+           int M[][] = new int[a[0]][a[1]];
+          
+           for (int i=0;i<a[0];i++)
+           {
+             String[] n = br.readLine().trim().split("\\s+"); 
+            for(int j=0;j<a[1];j++)
+             {
+              M[i][j]= Integer.parseInt(n[j]);
+             }
+           }
+           CandidateCode I = new CandidateCode(); 
+        System.out.println(I.countIslands(M,a[0],a[1])); 
+        
+      } catch (IOException ioe) {
+         System.out.println(ioe);
+      }
+}
+
+
+
+   // A function to check if a given cell (row, col) can be included in DFS 
+   
+    boolean isSafe(int M[][], int row, int col, 
+                   boolean visited[][],int ROW,int COL) 
+    { 
+        // row number is in range, column number is in range 
+            return (row >= 0) && (row < ROW) && (col >= 0) && (col < COL) && (M[row][col] == 1 && !visited[row][col]); 
+    } 
+  
+    // A utility function to do DFS 
+  
+   static int sum =0; 
+   void DFS(int M[][], int row, int col, boolean visited[][],int ROW,int COL) 
+    { 
+        // These arrays are used to get row and column numbers 
+        // of 8 neighbors of a given cell 
+        int rowNbr[] = new int[] { -1, -1, -1, 0, 0, 1, 1, 1 }; 
+        int colNbr[] = new int[] { -1, 0, 1, -1, 1, -1, 0, 1 }; 
+        int ROW1 = ROW;int COL1 = COL;
+        // Mark this cell as visited 
+        visited[row][col] = true; 
+        sum = sum + 1;
+        
+        // Recur for all connected neighbours 
+        for (int k = 0; k < 8; ++k) 
+            if (isSafe(M, row + rowNbr[k], col + colNbr[k], visited,ROW1,COL1)) 
+                DFS(M, row + rowNbr[k], col + colNbr[k], visited,ROW1,COL1); 
+     
+    } 
+  
+    // The main function that returns count of islands 
+    int countIslands(int M[][],int ROW,int COL) 
+    { 
+        
+        // Initially all cells are unvisited 
+        boolean visited[][] = new boolean[ROW][COL]; 
+  
+        // Initialize count as 0 and travese through the all cells 
+        // of given matrix 
+        int count = 0; 
+        int count1 =0;
+        
+       
+        for (int i = 0; i < ROW; ++i) 
+            for (int j = 0; j < COL; ++j) 
+            {  
+                if (M[i][j] == 1 && !visited[i][j]) 
+                {                 
+                    
+                    DFS(M, i, j, visited,ROW,COL); 
+                    ++count; 
+                    count1= Math.max(count1,sum);
+                    sum =0;
+                } 
+            }
+  
+        return count1; 
+    } 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
